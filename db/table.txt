@@ -1,0 +1,7 @@
+1.user
+email  String
+password  String
+
+2.movie
+name String
+poster String 海报
