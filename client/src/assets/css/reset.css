@@ -1,0 +1,14 @@
+html,body{
+    height: 100%;
+}
+html,body,p,ul,ol,dl,div,h1,h2,h3,h4,h5,h6{
+    margin: 0;
+    padding: 0;
+}
+ul,ol{
+    list-style: none;
+}
+a{
+    color: #000;
+    text-decoration: none;
+}

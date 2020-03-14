@@ -15,10 +15,17 @@ app.use(morgan('combined'));
 
 
 //用户相关
-app.use("/user",require("./controller/UserController"));
+app.use("/api/user",require("./controller/UserController"));
 
 //Jwt测试
-app.get("/",AuthenticateToken.isvalidToken,(req,res) => {
-    res.send("aaaa")
+//AuthenticateToken.isvalidToken
+app.get("/api",(req,res) => {
+    res.send({
+        code: 0,
+        data: [
+            {name: '1',age: 18},
+            {name: '2',age: 22}
+        ]
+    })
 });
 
