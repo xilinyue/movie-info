@@ -52,6 +52,8 @@ export default{
                         if(data.code === 0){
                             this.loading = false;
                             this.$message({message: data.msg,type: 'success'});
+                            this.$store.dispatch("setToken",data.token);
+                            this.$store.dispatch("setUserInfo",data.userInfo);
                             setTimeout(() => {
                                 this.$router.push("/");
                             },1000)
