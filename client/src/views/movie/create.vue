@@ -45,7 +45,7 @@
                 <el-button
                     type="primary"
                     native-type="submit"
-                    @click.prevent="createMoive">保存</el-button>
+                    @click.prevent="createMovie">保存</el-button>
                 <el-button type="warning" @click="resetCreateForm">重置</el-button>
             </el-row>
         </el-form>
@@ -85,7 +85,7 @@ export default {
         }
     },
     methods: {
-        createMoive(){
+        createMovie(){
             this.$refs.createForm.validate(valid => {
                 if(valid) {
                     this.$message({

@@ -55,7 +55,11 @@ export default{
                             this.$store.dispatch("setToken",data.token);
                             this.$store.dispatch("setUserInfo",data.userInfo);
                             setTimeout(() => {
-                                this.$router.push("/");
+                                if(this.$route.query.redirect) {
+                                    this.$router.push(this.$route.query.redirect);
+                                }else{
+                                    this.$router.push("/")
+                                }
                             },1000)
                         }else{
                             this.loading = false;
@@ -63,7 +67,7 @@ export default{
                         }
                     });
                 }else{
-                    return;
+                    return null;
                 }
             })
         }
