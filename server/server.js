@@ -16,6 +16,8 @@ app.use(morgan('combined'));
 
 //用户相关
 app.use("/api/user",require("./controller/UserController"));
+//电影信息相关
+app.use('/api/movie',require("./controller/MovieController"));
 
 //Jwt测试
 //AuthenticateToken.isvalidToken

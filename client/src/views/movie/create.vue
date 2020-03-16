@@ -2,6 +2,7 @@
     <div class="movie-add">
         <div class="header">
             新增信息
+            <el-button type="primary" size="mini" @click="$router.push('/movie')">电影列表</el-button>
         </div>
         <el-form 
             ref="createForm" 
@@ -33,6 +34,39 @@
                     </el-form-item>
                 </el-col>
             </el-row>
+
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="电影编剧" prop="screenwriter">
+                        <el-input v-model="createForm.screenwriter" placeholder="请输入电影海报地址"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="IMDB_ID" prop="imdb_id">
+                        <el-input v-model="createForm.imdb_id" placeholder="请输入电影评分"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="电影导演" prop="director">
+                        <el-input v-model="createForm.director" placeholder="请输入电影导演"></el-input>
+                    </el-form-item>
+                </el-col>
+                <el-col :span="12">
+                    <el-form-item label="电影年份" prop="year">
+                        <el-input v-model="createForm.year" placeholder="请输入电影年份"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
+            <el-row>
+                <el-col :span="12">
+                    <el-form-item label="电影时长" prop="timing">
+                        <el-input type="text" v-model="createForm.timing"
+                                  placeholder="请输入电影时长"></el-input>
+                    </el-form-item>
+                </el-col>
+            </el-row>
             <el-row>
                 <el-col :span="24">
                     <el-form-item label="电影简介" prop="description">
@@ -54,15 +88,21 @@
     </div>
 </template>
 <script>
+import movieService from '../../services/MovieService';
 export default {
     name: 'create',
     data() {
         return {
             createForm: {
                 name: '',
+                director: '',
+                year: '',
+                screenwriter: '',
                 type: '',
-                poster: '',
                 rating: '',
+                timing: '',
+                imdb_id: '',
+                poster: '',
                 description: ''
             },
             createFormRules: {
@@ -78,6 +118,21 @@ export default {
                 rating: [
                     {required: true, message: '电影评分必填！',trigger: 'blur'}
                 ],
+                director: [
+                    {required: true, message: '电影导演必填！',trigger: 'blur'}
+                ],
+                year: [
+                    {required: true, message: '电影年份必填！',trigger: 'blur'}
+                ],
+                screenwriter: [
+                    {required: true, message: '电影编剧必填！',trigger: 'blur'}
+                ],
+                imdb_id: [
+                    {required: true, message: 'IMDB_ID必填！',trigger: 'blur'}
+                ],
+                timing: [
+                    {required: true, message: '电影时长必填！',trigger: 'blur'}
+                ],
                 description: [
                     {required: true, message: '电影简介必填！',trigger: 'blur'}
                 ]
@@ -88,14 +143,18 @@ export default {
         createMovie(){
             this.$refs.createForm.validate(valid => {
                 if(valid) {
-                    this.$message({
-                        type: 'success',
-                        message: '保存成功，页面将在2秒之后跳转',
-                        duration: 2000,
-                        onClose: () =>  {
-                            this.$router.push("/")
+                    movieService.addMovie(this.createForm).then(res => {
+                        let data = res.data;
+                        if (data.code === 0) {
+                            this.$router.push("/");
+                        }else{
+                            this.resetCreateForm();
+                            this.$message({
+                                type: 'warning',
+                                message: '创建电影信息失败'
+                            })
                         }
-                    })
+                    });
                 }else{
                     this.$message({
                         type: 'warning',
